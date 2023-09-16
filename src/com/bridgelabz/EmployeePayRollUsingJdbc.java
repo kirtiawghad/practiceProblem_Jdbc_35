@@ -1,11 +1,12 @@
 package com.bridgelabz;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 public class EmployeePayRollUsingJdbc {
-    static final String DB_URL = "jdbc:mysql://localhost:3306/Product_Database";
+    static final String DB_URL = "jdbc:mysql://localhost:3306/payroll_service_db";
     static final String USER = "root";
     static final String PASS = "root";
 
@@ -17,6 +18,7 @@ public class EmployeePayRollUsingJdbc {
         String retrieveDataFromEmployee = "select * from employee";
         String retrieveDataFromDepartment = "select * from department";
         String retrieveDataFromSalary = "select * from salary";
+        String updateSalary = "update salary set salary = ? where empid = ?";
 
         try{
             conn = DriverManager.getConnection(DB_URL, USER, PASS);
@@ -65,6 +67,12 @@ public class EmployeePayRollUsingJdbc {
                 System.out.println("empId="+empId);
                 System.out.println("-------------------------");
             }
+
+            //update salary
+            preparedStatement = conn.prepareStatement(updateSalary);
+            preparedStatement.setFloat(1, 65000);
+            preparedStatement.setInt(2, 1);
+            preparedStatement.executeUpdate();
         }catch(Exception e){
             System.out.println(e);
         }
